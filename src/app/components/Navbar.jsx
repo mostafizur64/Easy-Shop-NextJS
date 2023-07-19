@@ -10,8 +10,8 @@ import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
     const [navToggle, setNavToggle] = useState(false)
-    const { user, logout } = useAuth;
-    const { uid, displayName, photoURL } = user
+    const { user, logout } = useAuth();
+    const { uid, displayName, photoURL } = user || {}
     const { theme, toggleTheme } = useTheme();
 
     const navData = uid ? afterLoginNavData : beforeLoginNavData;

@@ -10,6 +10,7 @@ const useAuth = () => {
             'You must warp your application with AuthProvider ot use the authAuth'
         )
     }
+    return auth
 };
 
 export default useAuth;
