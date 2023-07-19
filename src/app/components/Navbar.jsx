@@ -90,7 +90,7 @@ const Navbar = () => {
                             <Image
                                 alt="user-logo"
                                 title={displayName}
-                                src={photoURL}
+                                src={photoURL ||'https://i.ibb.co/3CqFXC5/Mostafizur-Rahman.jpg' }
                                 width={40}
                                 height={40}
                                 className="h-10 w-10 rounded-full"
