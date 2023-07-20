@@ -7,17 +7,32 @@ import { afterLoginNavData, beforeLoginNavData } from '../data/navData';
 import useTheme from '../hook/useTheme';
 import useAuth from '../hook/useAuth';
 import { toast } from 'react-hot-toast';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [navToggle, setNavToggle] = useState(false)
     const { user, logout } = useAuth();
     const { uid, displayName, photoURL } = user || {}
     const { theme, toggleTheme } = useTheme();
+    const {replace} = useRouter()
+    const path = usePathname()
 
     const navData = uid ? afterLoginNavData : beforeLoginNavData;
     const handleLogout = async () => {
-        await logout()
-        toast.success('Successfully Logout')
+        try {
+            await logout()
+            const res = await fetch('/api/auth/logout', {
+                method: 'POST'
+            });
+            const data = await res.json();
+            toast.success('Successfully Logout')
+            if(path.includes('/dashboard') || path.includes('/profile')){
+                replace('/')
+            }
+        } catch (error) {
+            toast.error('Not Logout')
+
+        }
 
 
     }
@@ -90,7 +105,7 @@ const Navbar = () => {
                             <Image
                                 alt="user-logo"
                                 title={displayName}
-                                src={photoURL ||'https://i.ibb.co/3CqFXC5/Mostafizur-Rahman.jpg' }
+                                src={photoURL || 'https://i.ibb.co/3CqFXC5/Mostafizur-Rahman.jpg'}
                                 width={40}
                                 height={40}
                                 className="h-10 w-10 rounded-full"

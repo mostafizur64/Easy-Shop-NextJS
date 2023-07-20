@@ -9,6 +9,7 @@ import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import useAuth from "../hook/useAuth";
+import createJWT from "../utils/createJWT";
 
 const LoginForm = () => {
     const {
@@ -19,8 +20,8 @@ const LoginForm = () => {
 
 
     const search = useSearchParams();
-    const from = search.get("redirectUrl") || "/";
-    const { replace, refresh } = useRouter();
+    const from = search.get('redirectUrl') || '/';
+    const { replace } = useRouter()
 
     const { signIn, googleLogin } = useAuth()
     const onSubmit = async (data) => {
@@ -28,9 +29,11 @@ const LoginForm = () => {
         const toastId = await toast.loading('loading.....')
         try {
             const user = await signIn(email, password);
+            await createJWT({ email })
+
             toast.dismiss(toastId);
             toast.success('User SignIn successfully')
-
+            replace(from)
         } catch (error) {
             toast.dismiss(toastId)
             toast.error(error.message || 'User is not signIn')
@@ -43,9 +46,11 @@ const LoginForm = () => {
 
 
         try {
-            const user = await googleLogin();
+            const { user } = await googleLogin();
+           await createJWT({ email: user.email })
             toast.dismiss(toastId);
             toast.success('User SignIn successfully')
+            replace(from)
         } catch (error) {
             toast.dismiss(toastId)
             toast.error(error.message || 'User is not signIn')

@@ -9,6 +9,7 @@ import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import useAuth from "../hook/useAuth";
+import createJWT from "../utils/createJWT";
 
 const SignupForm = () => {
     const {
@@ -21,9 +22,8 @@ const SignupForm = () => {
 
     const { createUser, profileUpdate } = useAuth();
     const search = useSearchParams();
-    const from = search.get("redirectUrl") || "/";
-    const { replace, refresh } = useRouter();
-
+    const from = search.get('redirectUrl');
+    const {replace} = useRouter()
     const uploadImage = async (event) => {
         const formData = new FormData();
         if (!event.target.files[0]) return;
@@ -48,32 +48,32 @@ const SignupForm = () => {
             toast.dismiss(toastId);
         }
     };
-
     const onSubmit = async (data, event) => {
         const { name, email, password, photo } = data
         const toastId = await toast.loading('Loading.......');
         try {
             const user = createUser(email, password);
+          await createJWT({ email })
             await profileUpdate({
                 displayName: name,
                 photoURL: photo,
             })
             toast.dismiss(toastId);
             toast.success('User created Successfully');
+            replace(from)
         } catch (error) {
             toast.dismiss(toastId);
             toast.success(error.message || 'User not created Successfully');
         }
     };
-
     const handleGoogleLogin = async () => {
         const toastId = await toast.loading('loading.....');
-
-
         try {
-            const user = await googleLogin();
+            const { user } = await googleLogin();
+           await createJWT({ email: user.email })
             toast.dismiss(toastId);
             toast.success('User SignIn successfully')
+            replace(from)
         } catch (error) {
             toast.dismiss(toastId)
             toast.error(error.message || 'User is not signIn')
