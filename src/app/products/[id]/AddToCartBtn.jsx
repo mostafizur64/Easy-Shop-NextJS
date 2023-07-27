@@ -1,7 +1,7 @@
 "use client";
 
 
-import useCart from "@/app/hook/useCart";
+import useCart from "@/hook/useCart";
 import { toast } from "react-hot-toast";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 

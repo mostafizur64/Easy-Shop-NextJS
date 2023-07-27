@@ -1,4 +1,5 @@
-import Checkout from "./Checkout";
+import Checkout from "./CheckOut";
+
 
 export const metadata = {
   title: "Checkout - Easy Shop",
