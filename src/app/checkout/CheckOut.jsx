@@ -6,6 +6,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import classNames from "../utils/ClassNames";
 import useCart from "@/hook/useCart";
 
+
 const Checkout = () => {
   const { isLoading, mutate, cart, isValidating } = useCart();
 
