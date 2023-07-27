@@ -8,8 +8,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import useAuth from "../hook/useAuth";
+
 import createJWT from "../utils/createJWT";
+import useAuth from "@/hook/useAuth";
 
 const LoginForm = () => {
     const {

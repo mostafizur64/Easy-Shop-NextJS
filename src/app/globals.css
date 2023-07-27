@@ -16,7 +16,7 @@
 
 .main-slider .swiper-button-next,
 .main-slider .swiper-button-prev {
-  @apply absolute bg-white text-black w-12 h-12 rounded-full hidden sm:flex items-center justify-center;
+  @apply absolute bg-white text-black w-12 h-12 rounded-full hidden sm:flex items-center justify-center p-2;
 }
 
 [data-theme="dark"] .main-slider .swiper-button-next,
