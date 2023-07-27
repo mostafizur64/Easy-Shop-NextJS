@@ -1,7 +1,8 @@
 
-import { cache } from react;
-import 'server-only'
-import { getProductsFromDB } from '@/service/product.service';
-const getProducts = cache(getProductsFromDBFromDB);
+import { getProductsFromDb } from "@/services/product.service";
+import { cache } from "react";
+import "server-only";
 
-export default getCategories;
+const getProducts = cache(getProductsFromDb);
+
+export default getProducts;
